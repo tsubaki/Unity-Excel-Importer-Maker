@@ -1,0 +1,44 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.IO;
+using UnityEditor;
+using System.Xml.Serialization;
+using NPOI.HSSF.UserModel;
+using NPOI.XSSF.UserModel;
+using NPOI.SS.UserModel;
+
+public class $ExportTemplate$ : AssetPostprocessor {
+	private static readonly string filePath = "$IMPORT_PATH$";
+	private static readonly string exportPath = "$EXPORT_PATH$";
+	
+	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+	{
+		foreach (string asset in importedAssets) {
+			if (!filePath.Equals (asset))
+				continue;
+				
+			$ExcelData$ data = ($ExcelData$)AssetDatabase.LoadAssetAtPath (exportPath, typeof($ExcelData$));
+			if (data == null) {
+				data = ScriptableObject.CreateInstance<$ExcelData$> ();
+				AssetDatabase.CreateAsset ((ScriptableObject)data, exportPath);
+				data.hideFlags = HideFlags.NotEditable;
+			}
+			
+			data.list.Clear ();
+			using (FileStream stream = File.Open (filePath, FileMode.Open, FileAccess.Read)) {
+				IWorkbook book = new HSSFWorkbook (stream);
+				ISheet sheet = book.GetSheetAt (0);
+				
+				for (int i=1; i< sheet.LastRowNum; i++) {
+					IRow row = sheet.GetRow (i);
+					$ExcelData$.Param p = new $ExcelData$.Param ();
+					$EXPORT_DATA$
+					data.list.Add (p);
+				}
+			}
+
+			ScriptableObject obj = AssetDatabase.LoadAssetAtPath (exportPath, typeof(ScriptableObject)) as ScriptableObject;
+			EditorUtility.SetDirty (obj);
+		}
+	}
+}
