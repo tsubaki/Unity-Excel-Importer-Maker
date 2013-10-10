@@ -32,7 +32,7 @@ public class ExcelImporterMaker : EditorWindow
 			cell.isEnable = EditorGUILayout.BeginToggleGroup ("enable", cell.isEnable);
 			GUILayout.BeginHorizontal();
 			cell.name = EditorGUILayout.TextField (cell.name);
-			cell.type = (ValueType)EditorGUILayout.EnumPopup (cell.type);
+			cell.type = (ValueType)EditorGUILayout.EnumPopup (cell.type, GUILayout.MaxWidth(100));
 			GUILayout.EndHorizontal();
 			
 			EditorGUILayout.EndToggleGroup ();
@@ -123,6 +123,7 @@ public class ExcelImporterMaker : EditorWindow
 		entittyTemplate = entittyTemplate.Replace ("$Types$", builder.ToString ());
 		entittyTemplate = entittyTemplate.Replace ("$ExcelData$", className);
 		
+		Directory.CreateDirectory("Assets/Terasurware/Classes/");
 		File.WriteAllText ("Assets/Terasurware/Classes/" + className + ".cs", entittyTemplate);
 	}
 	
@@ -161,6 +162,7 @@ public class ExcelImporterMaker : EditorWindow
 		importerTemplate = importerTemplate.Replace ("$EXPORT_DATA$", builder.ToString ());
 		importerTemplate = importerTemplate.Replace ("$ExportTemplate$", fileName + "_importer");
 			
+		Directory.CreateDirectory("Assets/Terasurware/Classes/Editor/");
 		File.WriteAllText ("Assets/Terasurware/Classes/Editor/" + fileName + "_importer.cs", importerTemplate);
 	}
 	
