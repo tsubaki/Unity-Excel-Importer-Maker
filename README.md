@@ -8,12 +8,13 @@ Unity-Excel-Importer-Maker
 ![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/blob/gh-pages/import%20excel.jpg?raw=true)
 
 
-2. select xls file and **Create XLS Importer**  ![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/blob/gh-pages/create%20xls%20importer.jpg?raw=true)
+2. select xls file and **Create XLS Importer**  
+![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/blob/gh-pages/create%20xls%20importer.jpg?raw=true)
 
-3. Push **create** button. then, it make importer in Terasurware/Classes/Editor.  ![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/raw/gh-pages/push%20create%20button.jpg)
+3. Push **create** button. then, it make importer in Terasurware/Classes/Editor.  
+![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/raw/gh-pages/push%20create%20button.jpg)
 
-4. **ReImport the xls file**. so it make scriptable object same xls parameter.
-
+4. **ReImport the xls file**. so it make scriptable object same xls parameter.  
 ![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/blob/gh-pages/scriptable%20object.jpg?raw=true)
 
 ##importer settings 
