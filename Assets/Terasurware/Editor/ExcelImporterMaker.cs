@@ -142,16 +142,16 @@ public class ExcelImporterMaker : EditorWindow
 				builder.AppendLine ();
 				switch (row.type) {
 				case ValueType.BOOL:
-					builder.AppendFormat (tab + "p.{0} = row.GetCell({1}).BooleanCellValue;", row.name, rowCount);
+					builder.AppendFormat (tab + "cell = row.GetCell({1}); p.{0} = (cell == null ? false : cell.BooleanCellValue);", row.name, rowCount);
 					break;
 				case ValueType.DOUBLE:
-					builder.AppendFormat (tab + "p.{0} = row.GetCell({1}).NumericCellValue;", row.name, rowCount);
+					builder.AppendFormat (tab + "cell = row.GetCell({1}); p.{0} = (cell == null ? 0.0 : cell.NumericCellValue);", row.name, rowCount);
 					break;
 				case ValueType.INT:
-					builder.AppendFormat (tab + "p.{0} = (int)row.GetCell({1}).NumericCellValue;", row.name, rowCount);
+					builder.AppendFormat (tab + "cell = row.GetCell({1}); p.{0} = (int)(cell == null ? 0 : cell.NumericCellValue);", row.name, rowCount);
 					break;
 				case ValueType.STRING:
-					builder.AppendFormat (tab + "p.{0} = row.GetCell({1}).StringCellValue;", row.name, rowCount);
+					builder.AppendFormat (tab + "cell = row.GetCell({1}); p.{0} = (cell == null ? \"\" : cell.StringCellValue);", row.name, rowCount);
 					break;
 				}
 			}
