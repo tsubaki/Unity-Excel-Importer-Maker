@@ -17,8 +17,9 @@ public class ExcelImporterMaker : EditorWindow
 	{
 		GUILayout.Label ("makeing importer", EditorStyles.boldLabel);
 		className = EditorGUILayout.TextField ("class name", className);
-		
+
 		if (GUILayout.Button ("create")) {
+			EditorPrefs.SetString (s_key_prefix + fileName + ".className", className);
 			ExportEntity ();
 			ExportImporter ();
 			
@@ -35,6 +36,7 @@ public class ExcelImporterMaker : EditorWindow
 			GUILayout.BeginHorizontal();
 			cell.name = EditorGUILayout.TextField (cell.name);
 			cell.type = (ValueType)EditorGUILayout.EnumPopup (cell.type, GUILayout.MaxWidth(100));
+			EditorPrefs.SetInt(s_key_prefix + fileName + ".type."+ cell.name, (int)cell.type);
 			GUILayout.EndHorizontal();
 			
 			EditorGUILayout.EndToggleGroup ();
@@ -56,8 +58,9 @@ public class ExcelImporterMaker : EditorWindow
 	private List<ExcelRowParameter> typeList = new List<ExcelRowParameter> ();
 	private string className = string.Empty;
 	private string fileName = string.Empty;
+	private static string s_key_prefix = "terasurware.exel-importer-maker.";
 	
-	[MenuItem("Assets/Create XLS Importer")]
+	[MenuItem("Assets/XLS Import Settings...")]
 	static void ExportExcelToAssetbundle ()
 	{
 		foreach (Object obj in Selection.objects) {
@@ -73,8 +76,9 @@ public class ExcelImporterMaker : EditorWindow
 				IWorkbook book = new HSSFWorkbook (stream);
 			
 				ISheet sheet = book.GetSheetAt (0);
-				window.className = "Entity_" + sheet.SheetName;
-			
+
+				window.className = EditorPrefs.GetString (s_key_prefix + window.fileName + ".className", "Entity_" + sheet.SheetName);
+
 				IRow titleRow = sheet.GetRow (0);
 				IRow dataRow = sheet.GetRow (1);
 				for (int i=0; i < titleRow.LastCellNum; i++) {
@@ -87,18 +91,30 @@ public class ExcelImporterMaker : EditorWindow
 						parser.isEnable = true;
 
 						try {
-							string sampling = cell.StringCellValue;
-							parser.type = ValueType.STRING;
+							if(EditorPrefs.HasKey(s_key_prefix + window.fileName + ".type."+ parser.name)) {
+								parser.type = (ValueType)EditorPrefs.GetInt(s_key_prefix + window.fileName + ".type."+ parser.name);
+							} else {
+								string sampling = cell.StringCellValue;
+								parser.type = ValueType.STRING;
+							}
 						} catch {
 						}
 						try {
-							double sampling = cell.NumericCellValue;
-							parser.type = ValueType.DOUBLE;
+							if(EditorPrefs.HasKey(s_key_prefix + window.fileName + ".type."+ parser.name)) {
+								parser.type = (ValueType)EditorPrefs.GetInt(s_key_prefix + window.fileName + ".type."+ parser.name);
+							} else {
+								double sampling = cell.NumericCellValue;
+								parser.type = ValueType.DOUBLE;
+							}
 						} catch {
 						}
 						try {
-							bool sampling = cell.BooleanCellValue;
-							parser.type = ValueType.BOOL;
+							if(EditorPrefs.HasKey(s_key_prefix + window.fileName + ".type."+ parser.name)) {
+								parser.type = (ValueType)EditorPrefs.GetInt(s_key_prefix + window.fileName + ".type."+ parser.name);
+							} else {
+								bool sampling = cell.BooleanCellValue;
+								parser.type = ValueType.BOOL;
+							}
 						} catch {
 						}
 					}
