@@ -60,6 +60,7 @@ public class ExcelImporterMaker : EditorWindow
 		STRING,
 		INT,
 		DOUBLE,
+		FLOAT,
 	}
 	
 	private string filePath = string.Empty;
