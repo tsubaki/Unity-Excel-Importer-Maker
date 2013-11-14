@@ -27,7 +27,20 @@ public class ExcelImporterMaker : EditorWindow
 			AssetDatabase.Refresh (ImportAssetOptions.ForceUpdate);
 			Close ();
 		}
-		
+
+		// selecting sheets
+		EditorGUILayout.BeginVertical("box");
+		foreach (ExcelSheetParameter sheet in sheetList) {
+			GUILayout.BeginHorizontal();
+			sheet.isEnable = EditorGUILayout.BeginToggleGroup ("enable", sheet.isEnable);
+			EditorGUILayout.LabelField (sheet.sheetName);
+			EditorGUILayout.EndToggleGroup ();
+			EditorPrefs.SetBool(s_key_prefix + fileName + ".sheet."+ sheet.sheetName, sheet.isEnable);
+			GUILayout.EndHorizontal();
+		}
+		EditorGUILayout.EndVertical();
+
+		// selecting parameters
 		curretScroll = EditorGUILayout.BeginScrollView (curretScroll);
 		EditorGUILayout.BeginVertical("box");
 		string lastCellName = string.Empty;
@@ -65,6 +78,7 @@ public class ExcelImporterMaker : EditorWindow
 	
 	private string filePath = string.Empty;
 	private List<ExcelRowParameter> typeList = new List<ExcelRowParameter> ();
+	private List<ExcelSheetParameter> sheetList = new List<ExcelSheetParameter> ();
 	private string className = string.Empty;
 	private string fileName = string.Empty;
 	private static string s_key_prefix = "terasurware.exel-importer-maker.";
@@ -83,6 +97,14 @@ public class ExcelImporterMaker : EditorWindow
 			using (FileStream stream = File.Open (window.filePath, FileMode.Open, FileAccess.Read)) {
 			
 				IWorkbook book = new HSSFWorkbook (stream);
+
+				for(int i = 0; i < book.NumberOfSheets; ++i) {
+					ISheet s = book.GetSheetAt (i);
+					ExcelSheetParameter sht = new ExcelSheetParameter ();
+					sht.sheetName = s.SheetName;
+					sht.isEnable  = EditorPrefs.GetBool(s_key_prefix + window.fileName + ".sheet."+ sht.sheetName, true);
+					window.sheetList.Add( sht );
+				}
 			
 				ISheet sheet = book.GetSheetAt (0);
 
@@ -186,9 +208,22 @@ public class ExcelImporterMaker : EditorWindow
 		string importerTemplate = File.ReadAllText ("Assets/Terasurware/Editor/ExportTemplate.txt");
 		
 		StringBuilder builder = new StringBuilder ();
+		StringBuilder sheetListbuilder = new StringBuilder ();
 		int rowCount = 0;
 		string tab = "					";
 		bool isInbetweenArray = false;
+
+		//public string[] sheetNames = {"hoge", "fuga"};
+		//$SheetList$
+		foreach (ExcelSheetParameter sht in sheetList) {
+			if( sht.isEnable ) {
+				sheetListbuilder.Append ("\"" + sht.sheetName + "\"");
+			}
+			if( sht != sheetList[ sheetList.Count -1 ] ) {
+				sheetListbuilder.Append (",");
+			}
+		}
+		
 		foreach (ExcelRowParameter row in typeList) {
 			if (row.isEnable) {
 				if(!row.isArray) {
@@ -257,6 +292,7 @@ public class ExcelImporterMaker : EditorWindow
 		importerTemplate = importerTemplate.Replace ("$IMPORT_PATH$", filePath);
 		importerTemplate = importerTemplate.Replace ("$EXPORT_PATH$", Path.ChangeExtension(filePath, ".asset"));
 		importerTemplate = importerTemplate.Replace ("$ExcelData$",  className);
+		importerTemplate = importerTemplate.Replace ("$SheetList$", sheetListbuilder.ToString ());
 		importerTemplate = importerTemplate.Replace ("$EXPORT_DATA$", builder.ToString ());
 		importerTemplate = importerTemplate.Replace ("$ExportTemplate$", fileName + "_importer");
 			
@@ -264,6 +300,12 @@ public class ExcelImporterMaker : EditorWindow
 		File.WriteAllText ("Assets/Terasurware/Classes/Editor/" + fileName + "_importer.cs", importerTemplate);
 	}
 	
+	private class ExcelSheetParameter
+	{
+		public string sheetName;
+		public bool isEnable;
+	}
+
 	private class ExcelRowParameter
 	{
 		public ValueType type;

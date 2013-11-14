@@ -10,6 +10,7 @@ using NPOI.SS.UserModel;
 public class $ExportTemplate$ : AssetPostprocessor {
 	private static readonly string filePath = "$IMPORT_PATH$";
 	private static readonly string exportPath = "$EXPORT_PATH$";
+	private static readonly string[] sheetNames = { $SheetList$ };
 	
 	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
 	{
@@ -24,18 +25,29 @@ public class $ExportTemplate$ : AssetPostprocessor {
 				data.hideFlags = HideFlags.NotEditable;
 			}
 			
-			data.list.Clear ();
+			data.sheets.Clear ();
 			using (FileStream stream = File.Open (filePath, FileMode.Open, FileAccess.Read)) {
 				IWorkbook book = new HSSFWorkbook (stream);
-				ISheet sheet = book.GetSheetAt (0);
 				
-				for (int i=1; i<= sheet.LastRowNum; i++) {
-					IRow row = sheet.GetRow (i);
-					ICell cell = null;
-					
-					$ExcelData$.Param p = new $ExcelData$.Param ();
-					$EXPORT_DATA$
-					data.list.Add (p);
+				foreach(string sheetName in sheetNames) {
+					ISheet sheet = book.GetSheet(sheetName);
+					if( sheet == null ) {
+						Debug.LogError("[QuestData] sheet not found:" + sheetName);
+						continue;
+					}
+
+					$ExcelData$.Sheet s = new $ExcelData$.Sheet ();
+					s.name = sheetName;
+				
+					for (int i=1; i< sheet.LastRowNum; i++) {
+						IRow row = sheet.GetRow (i);
+						ICell cell = null;
+						
+						$ExcelData$.Param p = new $ExcelData$.Param ();
+						$EXPORT_DATA$
+						s.list.Add (p);
+					}
+					data.sheets.Add(s);
 				}
 			}
 
