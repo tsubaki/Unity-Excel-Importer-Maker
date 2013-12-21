@@ -296,6 +296,9 @@ public class ExcelImporterMaker : EditorWindow
                 } else
                 {
                     // only the head of array should generate code
+						case ValueType.FLOAT:
+							builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0} = (float)(cell == null ? 0 : cell.NumericCellValue);", row.name, rowCount);
+							break;
                     if (!isInbetweenArray)
                     {
                         int arrayLength = 0;
@@ -315,6 +318,9 @@ public class ExcelImporterMaker : EditorWindow
                             case ValueType.INT:
                                 builder.AppendFormat(tab + "p.{0} = new int[{1}];", row.name, arrayLength);
                                 break;
+							case ValueType.FLOAT:
+								builder.AppendFormat(tab + "p.{0} = new float[{1}];", row.name, arrayLength);
+								break;
                             case ValueType.STRING:
                                 builder.AppendFormat(tab + "p.{0} = new string[{1}];", row.name, arrayLength);
                                 break;
@@ -333,6 +339,9 @@ public class ExcelImporterMaker : EditorWindow
                                     break;
                                 case ValueType.INT:
                                     builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (int)(cell == null ? 0 : cell.NumericCellValue);", row.name, rowCount + i, i);
+								case ValueType.FLOAT:
+									builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (float)(cell == null ? 0.0 : cell.NumericCellValue);", row.name, rowCount + i, i);
+									break;
                                     break;
                                 case ValueType.STRING:
                                     builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (cell == null ? \"\" : cell.StringCellValue);", row.name, rowCount + i, i);
