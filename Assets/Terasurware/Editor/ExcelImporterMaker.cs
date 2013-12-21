@@ -83,8 +83,8 @@ public class ExcelImporterMaker : EditorWindow
         BOOL,
         STRING,
         INT,
-        DOUBLE,
-        FLOAT,
+		FLOAT,
+		DOUBLE,
     }
 	
     private string filePath = string.Empty;
@@ -289,16 +289,17 @@ public class ExcelImporterMaker : EditorWindow
                         case ValueType.INT:
                             builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0} = (int)(cell == null ? 0 : cell.NumericCellValue);", row.name, rowCount);
                             break;
-                        case ValueType.STRING:
-                            builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0} = (cell == null ? \"\" : cell.StringCellValue);", row.name, rowCount);
-                            break;
-                    }
-                } else
-                {
-                    // only the head of array should generate code
 						case ValueType.FLOAT:
 							builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0} = (float)(cell == null ? 0 : cell.NumericCellValue);", row.name, rowCount);
 							break;
+						case ValueType.STRING:
+                            builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0} = (cell == null ? \"\" : cell.StringCellValue);", row.name, rowCount);
+                            break;
+					}
+                } else
+                {
+                    // only the head of array should generate code
+
                     if (!isInbetweenArray)
                     {
                         int arrayLength = 0;
@@ -339,10 +340,10 @@ public class ExcelImporterMaker : EditorWindow
                                     break;
                                 case ValueType.INT:
                                     builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (int)(cell == null ? 0 : cell.NumericCellValue);", row.name, rowCount + i, i);
+									break;
 								case ValueType.FLOAT:
 									builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (float)(cell == null ? 0.0 : cell.NumericCellValue);", row.name, rowCount + i, i);
 									break;
-                                    break;
                                 case ValueType.STRING:
                                     builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (cell == null ? \"\" : cell.StringCellValue);", row.name, rowCount + i, i);
                                     break;
