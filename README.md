@@ -1,7 +1,8 @@
-Unity-Excel-Importer-Maker
+#Unity-Excel-Importer-Maker
 
 ---
-##How To Use
+
+##How To Use(E)
 
 1. import xls file  
 ![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/blob/gh-pages/import%20excel.jpg?raw=true)
