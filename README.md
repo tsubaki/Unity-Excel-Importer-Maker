@@ -1,8 +1,8 @@
-Unity-Excel-Importer-Maker
-==========================
+#Unity-Excel-Importer-Maker
 
--
-##How To Use
+---
+
+##How To Use(E)
 
 1. import xls file  
 ![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/blob/gh-pages/import%20excel.jpg?raw=true)
@@ -25,3 +25,9 @@ The parameter type : cell type.
 The asset file name : xls file name. 
   
 ![Alt text](https://github.com/tsubaki/Unity-Excel-Importer-Maker/blob/gh-pages/importer%20settings.jpg?raw=true)
+
+#日本語資料
+-  [Excelでデータを管理してUnity iOS/Androidで使うワークフローをノーコーディングで使えるようにした](http://terasur.blog.fc2.com/blog-entry-588.html)
+-  [Unity-Excel-Importer-Maker 配列型に対応](http://terasur.blog.fc2.com/blog-entry-606.html)
+-  [Unity-Excel-Importer-Makerのマルチシートに対応](http://terasur.blog.fc2.com/blog-entry-626.html)
+-  [Excel Importer、同一ブックの複数フォーマット出力機能を追加](http://terasur.blog.fc2.com/blog-entry-700.html)
