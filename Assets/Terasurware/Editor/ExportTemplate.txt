@@ -38,7 +38,7 @@ public class $ExportTemplate$ : AssetPostprocessor {
 					$ExcelData$.Sheet s = new $ExcelData$.Sheet ();
 					s.name = sheetName;
 				
-					for (int i=1; i< sheet.LastRowNum; i++) {
+					for (int i=1; i<= sheet.LastRowNum; i++) {
 						IRow row = sheet.GetRow (i);
 						ICell cell = null;
 						
