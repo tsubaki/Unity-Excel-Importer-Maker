@@ -157,7 +157,7 @@ public class ExcelImporterMaker : EditorWindow
                         }
                     }
 				
-                    if (cell.CellType != CellType.Unknown && cell.CellType != CellType.BLANK)
+                    if (cell.CellType != CellType.Unknown && cell.CellType != CellType.Blank)
                     {
                         parser.isEnable = true;
 
