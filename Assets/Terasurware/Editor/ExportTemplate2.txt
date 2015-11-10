@@ -4,6 +4,7 @@ using System.IO;
 using UnityEditor;
 using System.Xml.Serialization;
 using NPOI.HSSF.UserModel;
+using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 
 public class $ExportTemplate$ : AssetPostprocessor
@@ -20,7 +21,8 @@ public class $ExportTemplate$ : AssetPostprocessor
 
             using (FileStream stream = File.Open (filePath, FileMode.Open, FileAccess.Read))
             {
-                var book = new HSSFWorkbook(stream);
+                //var book = new HSSFWorkbook(stream);
+				var book = new XSSFWorkbook(stream);
 
                 foreach (string sheetName in sheetNames)
                 {
