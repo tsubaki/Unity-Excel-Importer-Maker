@@ -6,6 +6,7 @@ using UnityEditor;
 using System.IO;
 using NPOI.SS.UserModel;
 using NPOI.HSSF.UserModel;
+using NPOI.XSSF.UserModel;
 using System.Collections.Generic;
 using System.Text;
 
@@ -110,7 +111,8 @@ public class ExcelImporterMaker : EditorWindow
             using (FileStream stream = File.Open (window.filePath, FileMode.Open, FileAccess.Read))
             {
 			
-                IWorkbook book = new HSSFWorkbook(stream);
+                //IWorkbook book = new HSSFWorkbook(stream);
+                IWorkbook book = new XSSFWorkbook(stream);
 
                 for (int i = 0; i < book.NumberOfSheets; ++i)
                 {
@@ -157,7 +159,7 @@ public class ExcelImporterMaker : EditorWindow
                         }
                     }
 				
-                    if (cell.CellType != CellType.Unknown && cell.CellType != CellType.BLANK)
+                    if (cell.CellType != CellType.Unknown && cell.CellType != CellType.Blank)
                     {
                         parser.isEnable = true;
 
