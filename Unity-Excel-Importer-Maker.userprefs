@@ -1,0 +1,15 @@
+﻿<Properties StartupItem="Assembly-CSharp-Editor.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Terasurware\Classes\Entity_item1.cs">
+    <Files>
+      <File FileName="Assets\Terasurware\Editor\ExcelImporterMaker.cs" Line="129" Column="41" />
+      <File FileName="Assets\Terasurware\Editor\ExportTemplate.txt" Line="31" Column="1" />
+      <File FileName="Assets\Terasurware\Editor\ExportTemplate2.txt" Line="28" Column="6" />
+      <File FileName="Assets\Terasurware\Classes\Entity_item1.cs" Line="6" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
