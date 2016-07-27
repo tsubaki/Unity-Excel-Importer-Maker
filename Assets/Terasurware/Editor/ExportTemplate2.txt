@@ -21,8 +21,11 @@ public class $ExportTemplate$ : AssetPostprocessor
 
             using (FileStream stream = File.Open (filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                //var book = new HSSFWorkbook(stream);
-				var book = new XSSFWorkbook(stream);
+				if (Path.GetExtension (filePath) == ".xls") {
+					book = new HSSFWorkbook(stream);
+				} else {
+					book = new XSSFWorkbook(stream);
+				}
 
                 foreach (string sheetName in sheetNames)
                 {

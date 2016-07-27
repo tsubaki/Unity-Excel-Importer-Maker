@@ -110,9 +110,12 @@ public class ExcelImporterMaker : EditorWindow
 		
 			using (FileStream stream = File.Open (window.filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-			
-                //IWorkbook book = new HSSFWorkbook(stream);
-                IWorkbook book = new XSSFWorkbook(stream);
+				IWorkbook book = null;
+				if (Path.GetExtension (window.filePath) == ".xls") {
+					book = new HSSFWorkbook(stream);
+				} else {
+					book = new XSSFWorkbook(stream);
+				}
 
                 for (int i = 0; i < book.NumberOfSheets; ++i)
                 {
