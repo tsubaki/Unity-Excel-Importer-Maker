@@ -19,7 +19,7 @@ public class $ExportTemplate$ : AssetPostprocessor
             if (!filePath.Equals(asset))
                 continue;
 
-            using (FileStream stream = File.Open (filePath, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = File.Open (filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 //var book = new HSSFWorkbook(stream);
 				var book = new XSSFWorkbook(stream);

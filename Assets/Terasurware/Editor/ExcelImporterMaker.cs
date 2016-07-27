@@ -108,7 +108,7 @@ public class ExcelImporterMaker : EditorWindow
             window.fileName = Path.GetFileNameWithoutExtension(window.filePath);
 		
 		
-            using (FileStream stream = File.Open (window.filePath, FileMode.Open, FileAccess.Read))
+			using (FileStream stream = File.Open (window.filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
 			
                 //IWorkbook book = new HSSFWorkbook(stream);

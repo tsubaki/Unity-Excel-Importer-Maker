@@ -26,9 +26,9 @@ public class $ExportTemplate$ : AssetPostprocessor {
 			}
 			
 			data.sheets.Clear ();
-			using (FileStream stream = File.Open (filePath, FileMode.Open, FileAccess.Read)) {
 				//IWorkbook book = new HSSFWorkbook (stream);
 				IWorkbook book = new XSSFWorkbook (stream);
+			using (FileStream stream = File.Open (filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
 				
 				foreach(string sheetName in sheetNames) {
 					ISheet sheet = book.GetSheet(sheetName);
