@@ -219,6 +219,7 @@ public class ExcelImporterMaker : EditorWindow
     {
         string templateFilePath = (sepalateSheet) ? "Assets/Terasurware/Editor/EntityTemplate2.txt" : "Assets/Terasurware/Editor/EntityTemplate.txt";
         string entittyTemplate = File.ReadAllText(templateFilePath);
+        entittyTemplate = entittyTemplate.Replace("\r\n", "\n").Replace("\n", System.Environment.NewLine);
         StringBuilder builder = new StringBuilder();
         bool isInbetweenArray = false;
         foreach (ExcelRowParameter row in typeList)
