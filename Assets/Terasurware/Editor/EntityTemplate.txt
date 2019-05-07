@@ -2,6 +2,43 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public static class ICellExt {
+    public static string ForceStringCellValue(this ICell cell)
+    {
+        string s = null;
+        switch (cell.CellType)
+        {
+            case CellType.Blank:
+                s = "";
+                break;
+            case CellType.Boolean:
+                s = cell.BooleanCellValue + "";
+                break;
+            case CellType.Error:
+                s = cell.ErrorCellValue + "";
+                break;
+            case CellType.Formula:
+                s = cell.CellFormula;
+                break;
+            case CellType.Numeric:
+                s = cell.NumericCellValue + "";
+                break;
+            case CellType.String:
+                return cell.StringCellValue;
+            case CellType.Unknown:
+                s = "??? CellType.Unknown";
+                break;
+            default:
+                Debug.LogError($"can't happen at sheet {cell.Sheet} row {cell.Row}");
+                return "??? UNKNOWN " + cell.CellType;
+        }
+        Debug.LogWarning($"expected STRING cell, but {cell.CellType} is found at "
+                        + $"sheet:{cell.Sheet.SheetName} row:{cell.Row.RowNum} column:{cell.ColumnIndex} s:[{s}]");
+        // return s + " (warn: force converted)";
+        return s;
+    }
+}
+
 public class $ExcelData$ : ScriptableObject
 {	
 	public List<Sheet> sheets = new List<Sheet> ();
