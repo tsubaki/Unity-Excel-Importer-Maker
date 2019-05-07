@@ -299,7 +299,7 @@ public class ExcelImporterMaker : EditorWindow
 							builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0} = (float)(cell == null ? 0 : cell.NumericCellValue);", row.name, rowCount);
 							break;
 						case ValueType.STRING:
-                            builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0} = (cell == null ? \"\" : cell.StringCellValue);", row.name, rowCount);
+                            builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0} = (cell == null ? \"\" : cell.ForceStringCellValue());", row.name, rowCount);
                             break;
 					}
                 } else
@@ -351,7 +351,7 @@ public class ExcelImporterMaker : EditorWindow
 									builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (float)(cell == null ? 0.0 : cell.NumericCellValue);", row.name, rowCount + i, i);
 									break;
                                 case ValueType.STRING:
-                                    builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (cell == null ? \"\" : cell.StringCellValue);", row.name, rowCount + i, i);
+                                    builder.AppendFormat(tab + "cell = row.GetCell({1}); p.{0}[{2}] = (cell == null ? \"\" : cell.ForceStringCellValue());", row.name, rowCount + i, i);
                                     break;
                             }
                         }
