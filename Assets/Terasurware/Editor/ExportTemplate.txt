@@ -48,6 +48,17 @@ public class $ExportTemplate$ : AssetPostprocessor {
 						IRow row = sheet.GetRow (i);
 						ICell cell = null;
 						
+                        //check blank or "end" condition stop blank info generation into script object
+                        cell = row.GetCell(0);
+                        if(cell.CellType == CellType.Blank)
+                            break;
+                        else if (cell.CellType == CellType.String)
+                        {
+				            if (cell.StringCellValue.ToUpper().Equals("END"))
+					            break;
+			            }						
+						
+						
 						$ExcelData$.Param p = new $ExcelData$.Param ();
 						$EXPORT_DATA$
 						s.list.Add (p);

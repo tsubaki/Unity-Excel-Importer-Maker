@@ -30,7 +30,7 @@ public class $ExportTemplate$ : AssetPostprocessor
 
                 foreach (string sheetName in sheetNames)
                 {
-                    var exportPath = "$ExportAssetDirectry$/" + sheetName + ".asset";
+                    var exportPath = @"$ExportAssetDirectry$/" + sheetName + ".asset";
                     
                     // check scriptable object
                     var data = ($ExcelData$)AssetDatabase.LoadAssetAtPath(exportPath, typeof($ExcelData$));
@@ -55,11 +55,22 @@ public class $ExportTemplate$ : AssetPostprocessor
                     {
                         IRow row = sheet.GetRow(i);
                         ICell cell = null;
-                        
-                        var p = new $ExcelData$.Param();
-			$EXPORT_DATA$
-
-                        data.param.Add(p);
+                        if(row != null){
+                            var p = new $ExcelData$.Param();
+                            //check blank or "end" condition stop blank info generation into script object
+			                cell = row.GetCell(0);
+			                if(cell.CellType == CellType.Blank)
+			                    break;
+			                else if (cell.CellType == CellType.String)
+			                {
+				                if (cell.StringCellValue.ToUpper().Equals("END"))
+					                break;
+			                }
+			                $EXPORT_DATA$
+                            
+                            
+                            data.param.Add(p);
+                        }
                     }
                     
                     // save scriptable object
